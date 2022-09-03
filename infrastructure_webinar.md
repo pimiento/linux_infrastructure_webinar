@@ -1,51 +1,51 @@
-- [Почему Linux?](#org533b537)
-- [Дистрибутивы Linux](#orgbd0ac71)
-- [Какой же ставить на сервер?!](#org44cae6d)
-  - [Debian-based](#org7949d5e)
-  - [RedHat-based](#org1bb3b8f)
-- [Debian-based](#orgf99c55f)
-  - [Debian](#org6a0743e)
-  - [Ubuntu](#orgc28d7ef)
-- [RedHat-based](#org06b55b8)
-  - [RedHat](#org8debe20)
-  - [CentOS](#org39ee941)
-  - [Fedora](#orga002597)
-- [Другие](#org5ab6f9f)
-  - [Gentoo](#org59c586a)
-  - [Arch Linux](#org627545b)
-- [Полезные команды](#orgf5ce7d9)
-  - [Обновление системы](#org2b97635)
-  - [Поиск пакета](#orgdecc004)
-  - [Установка пакета](#orgff848c8)
-- [initd, systemd](#org2187891)
-- [BSD](#orgbfe91f1)
-  - [FreeBSD/OpenBSD/NetBSD](#orge8d6671)
-- [Доп. информация по Linux](#org319c996)
-- [Работа с «удалённым» сервером. SSH](#org36e6a29)
-- [SSH Ключи](#org04e9fda)
-- [Добавление алиасов для SSH-хостов](#orgad0e5ab)
-- [Python + SSH](#org4f7b436)
-- [Ansible](#orgbee6f39)
-- [Salt](#org10b8eea)
-- [Rsync](#org6608e17)
-- [screen / tmux](#orge954f78)
-- [Проверка состояния сервера](#org74464dd)
-- [Другие оболочки комнадной строки](#org0c2ce60)
-- [PostgreSQL / MySQL / SQLite / NoSQL](#orgacbd9d6)
-- [Репликация](#org0d88ed6)
-- [Шардирование](#org72e2f49)
-- [Nginx](#org9c9b4b4)
-- [Nginx](#org0a98385)
-- [Cron](#orgf4d1f27)
-- [Бэкапы](#orgaf8f330)
-- [Logrotate](#org6951b9e)
-- [Дополнительная литература](#orgb4fd001)
-- [Безопасность](#orge8f00c5)
-- [Вопросы-ответы](#org97c187b)
+- [Почему Linux?](#org52e9d4c)
+- [Дистрибутивы Linux](#orgdb8387b)
+- [Какой же ставить на сервер?!](#org3225c76)
+  - [Debian-based](#org1410e5d)
+  - [RedHat-based](#org9f6fcbe)
+- [Debian-based](#org056ed41)
+  - [Debian](#orgbf7d173)
+  - [Ubuntu](#orgd64f452)
+- [RedHat-based](#org2b2aad1)
+  - [RedHat](#orgf530413)
+  - [CentOS](#org1e74244)
+  - [Fedora](#org015a5d5)
+- [Другие](#orgcdf73a9)
+  - [Gentoo](#org639aa79)
+  - [Arch Linux](#org1488db1)
+- [Полезные команды](#org274e9f1)
+  - [Обновление системы](#orgb8253f8)
+  - [Поиск пакета](#orge7736bf)
+  - [Установка пакета](#org0889050)
+- [initd, systemd](#orgc9e7dbd)
+- [BSD](#org1201608)
+  - [FreeBSD/OpenBSD/NetBSD](#org1471656)
+- [Доп. информация по Linux](#orgb04b535)
+- [Работа с «удалённым» сервером. SSH](#orgcd01408)
+- [SSH Ключи](#org4895d65)
+- [Добавление алиасов для SSH-хостов](#orgc95ffc7)
+- [Python + SSH](#org256189c)
+- [Ansible](#orga32322f)
+- [Salt](#org8a7eaf0)
+- [Rsync](#org2b93430)
+- [screen / tmux](#org827d0ce)
+- [Проверка состояния сервера](#orgfd58ef8)
+- [Другие оболочки комнадной строки](#org82da93b)
+- [PostgreSQL / MySQL / SQLite / NoSQL](#orge876aac)
+- [Репликация](#org4e80186)
+- [Шардирование](#org3e6861f)
+- [Nginx](#org398a733)
+- [Nginx](#orgf3e897f)
+- [Cron](#orgf7d3b5a)
+- [Бэкапы](#orgd7c4d09)
+- [Logrotate](#org7d8a2c6)
+- [Дополнительная литература](#orga000e30)
+- [Безопасность](#orga1f06f7)
+- [Вопросы-ответы](#org68d1a6d)
 
 
 
-<a id="org533b537"></a>
+<a id="org52e9d4c"></a>
 
 # Почему Linux?
 
@@ -53,7 +53,7 @@
 ![img](win_lin_statistics.png)  
 
 
-<a id="orgbd0ac71"></a>
+<a id="orgdb8387b"></a>
 
 # Дистрибутивы Linux
 
@@ -62,97 +62,101 @@
 ![img](linux_distros.png)  
 
 
-<a id="org44cae6d"></a>
+<a id="org3225c76"></a>
 
 # Какой же ставить на сервер?!
 
 
-<a id="org7949d5e"></a>
+<a id="org1410e5d"></a>
 
 ## Debian-based
+
+![img](debian_logo.png)  
 
 -   deb-пакеты для установки программ
 -   aptitude/apt — пакетный менеджер
 
 
-<a id="org1bb3b8f"></a>
+<a id="org9f6fcbe"></a>
 
 ## RedHat-based
+
+![img](red_hat_logo.png)  
 
 -   rpm-пакеты для установки программ
 -   yum — пакетный менеджер
 
 
-<a id="orgf99c55f"></a>
+<a id="org056ed41"></a>
 
 # Debian-based
 
 
-<a id="org6a0743e"></a>
+<a id="orgbf7d173"></a>
 
 ## Debian
 
 Основная идея: он должен быть очень стабильный. В связи с этим версии пакетов будут довольно старые.  
 
 
-<a id="orgc28d7ef"></a>
+<a id="orgd64f452"></a>
 
 ## Ubuntu
 
 Задуман как user-friendly дистрибутив, но кто-то даже ставит его на продакшен-сервера. Не так заморочены за стабильность.  
 
 
-<a id="org06b55b8"></a>
+<a id="org2b2aad1"></a>
 
 # RedHat-based
 
 
-<a id="org8debe20"></a>
+<a id="orgf530413"></a>
 
 ## RedHat
 
 Коммерческий дистрибутив. Много дополнительных плюшек для стабильности и безопасности за платную подписку.  
 
 
-<a id="org39ee941"></a>
+<a id="org1e74244"></a>
 
 ## CentOS
 
 Бесплатная версия RedHat OS. Стремятся быть стабильными, в этом похожи на Debian.  
 
 
-<a id="orga002597"></a>
+<a id="org015a5d5"></a>
 
 ## Fedora
 
 User-friendly версия RedHat для рабочих станций.  
 
 
-<a id="org5ab6f9f"></a>
+<a id="orgcdf73a9"></a>
 
 # Другие
 
 
-<a id="org59c586a"></a>
+<a id="org639aa79"></a>
 
 ## Gentoo
 
 Дистрибутив, где все (почти все) программы компилируются из исходных кодов с целью полной оптимизации под тот процессор, на котором программы будут работать.  
 
 
-<a id="org627545b"></a>
+<a id="org1488db1"></a>
 
 ## Arch Linux
 
 Дистрибутив для опытных пользователей. Стремятся устанавливать только самые последние версии программ и библиотек.  
 
 
-<a id="orgf5ce7d9"></a>
+<a id="org274e9f1"></a>
 
 # Полезные команды
 
 
-<a id="org2b97635"></a>
+<a id="orgb8253f8"></a>
 
 ## Обновление системы
 
@@ -160,7 +164,7 @@ User-friendly версия RedHat для рабочих станций.
 -   rpm: yum update
 
 
-<a id="orgdecc004"></a>
+<a id="orge7736bf"></a>
 
 ## Поиск пакета
 
@@ -168,7 +172,7 @@ User-friendly версия RedHat для рабочих станций.
 -   rpm: yum search <request>
 
 
-<a id="orgff848c8"></a>
+<a id="org0889050"></a>
 
 ## Установка пакета
 
@@ -176,7 +180,7 @@ User-friendly версия RedHat для рабочих станций.
 -   rpm: yum install <package>
 
 
-<a id="org2187891"></a>
+<a id="orgc9e7dbd"></a>
 
 # initd, systemd
 
@@ -185,19 +189,19 @@ User-friendly версия RedHat для рабочих станций.
 ![img](init.png)  
 
 
-<a id="orgbfe91f1"></a>
+<a id="org1201608"></a>
 
 # BSD
 
 
-<a id="orge8d6671"></a>
+<a id="org1471656"></a>
 
 ## FreeBSD/OpenBSD/NetBSD
 
 ![img](freebsd-logo.png)  
 
 
-<a id="org319c996"></a>
+<a id="orgb04b535"></a>
 
 # Доп. информация по Linux
 
@@ -205,7 +209,7 @@ User-friendly версия RedHat для рабочих станций.
 -   Брайан У. Керниган, Роб Пайк «Unix. Программное окружение»
 
 
-<a id="org36e6a29"></a>
+<a id="orgcd01408"></a>
 
 # Работа с «удалённым» сервером. SSH
 
@@ -223,7 +227,7 @@ scp -P 2220 \
 ```
 
 
-<a id="org04e9fda"></a>
+<a id="org4895d65"></a>
 
 # SSH Ключи
 
@@ -241,7 +245,7 @@ scp -P 2220 \
     **Никогда не публикуйте свой приватный ключ!** *~/.ssh/id\_rsa*
 
 
-<a id="orgad0e5ab"></a>
+<a id="orgc95ffc7"></a>
 
 # Добавление алиасов для SSH-хостов
 
@@ -260,7 +264,7 @@ ssh bar
 ```
 
 
-<a id="org4f7b436"></a>
+<a id="org256189c"></a>
 
 # Python + SSH
 
@@ -280,7 +284,7 @@ print(stdout.read().decode('utf-8'))
 ```
 
 
-<a id="orgbee6f39"></a>
+<a id="orga32322f"></a>
 
 # Ansible
 
@@ -301,7 +305,7 @@ ansible-playbook mytask.yaml
 ```
 
 
-<a id="org10b8eea"></a>
+<a id="org8a7eaf0"></a>
 
 # Salt
 
@@ -309,7 +313,7 @@ ansible-playbook mytask.yaml
 В отличие от Ansible, все сервера-клиенты слушают мастер-сервер и ждут от него указаний. Это позволяет, например, ограничить на клиентах набор допустимых команд.  
 
 
-<a id="org6608e17"></a>
+<a id="org2b93430"></a>
 
 # Rsync
 
@@ -322,7 +326,7 @@ rsync -av source destination
 Можно использовать и на локальной машине.  
 
 
-<a id="orge954f78"></a>
+<a id="org827d0ce"></a>
 
 # screen / tmux
 
@@ -332,7 +336,7 @@ rsync -av source destination
 -   **<span class="underline"><span class="underline">[Tmux](https://www.ocf.berkeley.edu/~ckuehl/tmux/)</span></span>:** более user-friendly.
 
 
-<a id="org74464dd"></a>
+<a id="orgfd58ef8"></a>
 
 # Проверка состояния сервера
 
@@ -347,14 +351,14 @@ rsync -av source destination
 -   **date:** покажет текущее время на сервере
 
 
-<a id="org0c2ce60"></a>
+<a id="org82da93b"></a>
 
 # Другие оболочки комнадной строки
 
 *Bash* — это лишь одна из множества <span class="underline">оболочек командной строки</span>, но давно стал стандартом де-факто. Официальным стандартом является очень простая оболочка *sh*.\newline{}Кроме *Bash* пользуется популярностью оболочка *zsh* (в MacOS стандартная оболочка).\newline{} *Bash* и *zsh* совместимы с *sh* — это значит что базовый синтаксис у них соответствует синтаксису *sh*.  
 
 
-<a id="orgacbd9d6"></a>
+<a id="orge876aac"></a>
 
 # PostgreSQL / MySQL / SQLite / NoSQL
 
@@ -363,21 +367,21 @@ rsync -av source destination
 -   NoSQL огромное множество. Выбор делается в соответствии с <span class="underline"><span class="underline">[теоремой CAP](https://ru.wikipedia.org/wiki/%25D0%25A2%25D0%25B5%25D0%25BE%25D1%2580%25D0%25B5%25D0%25BC%25D0%25B0_CAP)</span></span>
 
 
-<a id="org0d88ed6"></a>
+<a id="org4e80186"></a>
 
 # Репликация
 
 ![img](db_replication.jpg)  
 
 
-<a id="org72e2f49"></a>
+<a id="org3e6861f"></a>
 
 # Шардирование
 
 ![img](db_sharding.png)  
 
 
-<a id="org9c9b4b4"></a>
+<a id="org398a733"></a>
 
 # Nginx
 
@@ -386,14 +390,14 @@ rsync -av source destination
 ![img](cat.jpg)  
 
 
-<a id="org0a98385"></a>
+<a id="orgf3e897f"></a>
 
 # Nginx
 
 ![img](nginx.jpeg)  
 
 
-<a id="orgf4d1f27"></a>
+<a id="orgf7d3b5a"></a>
 
 # Cron
 
@@ -423,7 +427,7 @@ crontab -e
 ```
 
 
-<a id="orgaf8f330"></a>
+<a id="orgd7c4d09"></a>
 
 # Бэкапы
 
@@ -435,7 +439,7 @@ crontab -e
 -   Инкрементальный бэкап (например, каждый день)
 
 
-<a id="org6951b9e"></a>
+<a id="org7d8a2c6"></a>
 
 # Logrotate
 
@@ -443,14 +447,14 @@ crontab -e
 Подчищает старые лог-файлы.  
 
 
-<a id="orgb4fd001"></a>
+<a id="orga000e30"></a>
 
 # Дополнительная литература
 
 Если вам стал интересен какой-то из пунктов, то пишите запрос на доп. литературу в #XX\_offtopic или #XX\_library \Winkey[][green!60!white]  
 
 
-<a id="orge8f00c5"></a>
+<a id="orga1f06f7"></a>
 
 # Безопасность
 
@@ -463,7 +467,7 @@ crontab -e
 -   Безопасность в Linux очень обширная тема. Специалисты по Linux-безопасности крайне востребованы.
 
 
-<a id="org97c187b"></a>
+<a id="org68d1a6d"></a>
 
 # Вопросы-ответы
 

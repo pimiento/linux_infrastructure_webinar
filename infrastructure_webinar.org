@@ -22,9 +22,13 @@
   [[file:linux_distros.png]]
 * Какой же ставить на сервер?!
 ** Debian-based
+   #+ATTR_LATEX: :width .04\textwidth
+   [[file:debian_logo.png]]
    - deb-пакеты для установки программ
    - aptitude/apt — пакетный менеджер
 ** RedHat-based
+   #+ATTR_LATEX: :width .05\textwidth
+   [[file:red_hat_logo.png]]
    - rpm-пакеты для установки программ
    - yum — пакетный менеджер
 * Debian-based
