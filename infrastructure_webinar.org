@@ -1,0 +1,221 @@
+#+TITLE: Серверная инфраструктура
+#+EMAIL: @pvavilin
+#+AUTHOR: @pvavilin
+#+INFOJS_OPT: view:nil toc:nil ltoc:t mouse:underline buttons:0 path:https://orgmode.org/org-info.js
+#+startup: beamer
+#+LaTeX_CLASS: beamer
+#+LaTeX_CLASS_OPTIONS: [smallest]
+#+LATEX_HEADER: \usetheme{default}
+#+LATEX_HEADER: \usecolortheme{crane}
+#+LATEX_HEADER: \usepackage{tikzsymbols}
+#+LATEX_HEADER: \RequirePackage{fancyvrb}
+#+LATEX_HEADER: \DefineVerbatimEnvironment{verbatim}{Verbatim}{fontsize=\scriptsize}
+#+LaTeX_HEADER: \lstset{basicstyle=\scriptsize\ttfamily}
+#+LATEX_HEADER: \usebackgroundtemplate{\includegraphics[width=.99\paperwidth,height=.99\paperheight]{bg.jpeg}}
+#+OPTIONS: \n:t ^:nil
+* Почему Linux?
+  [[https://w3techs.com/technologies/overview/operating_system][W3Techs]]
+  [[file:win_lin_statistics.png]]
+* Дистрибутивы Linux
+  *[[https://upload.wikimedia.org/wikipedia/commons/8/83/Linux_Distribution_Timeline_27_02_21.svg][их очень много!]]*
+  #+ATTR_LATEX: :width .14\textwidth
+  [[file:linux_distros.png]]
+* Какой же ставить на сервер?!
+** Debian-based
+   - deb-пакеты для установки программ
+   - aptitude/apt — пакетный менеджер
+** RedHat-based
+   - rpm-пакеты для установки программ
+   - yum — пакетный менеджер
+* Debian-based
+** Debian
+   Основная идея: он должен быть очень стабильный. В связи с этим версии пакетов будут довольно старые.
+** Ubuntu
+   Задуман как user-friendly дистрибутив, но кто-то даже ставит его на продакшен-сервера. Не так заморочены за стабильность.
+* RedHat-based
+** RedHat
+   Коммерческий дистрибутив. Много дополнительных плюшек для стабильности и безопасности за платную подписку.
+** CentOS
+   Бесплатная версия RedHat OS. Стремятся быть стабильными, в этом похожи на Debian.
+** Fedora
+   User-friendly версия RedHat для рабочих станций.
+* Другие
+** Gentoo
+   Дистрибутив, где все (почти все) программы компилируются из исходных кодов с целью полной оптимизации под тот процессор, на котором программы будут работать.
+** Arch Linux
+   Дистрибутив для опытных пользователей. Стремятся устанавливать только самые последние версии программ и библиотек.
+* Полезные команды
+** Обновление системы
+   - deb: apt-get update && apt-get upgrade
+   - rpm: yum update
+** Поиск пакета
+   - deb: apt-cache search <request>
+   - rpm: yum search <request>
+** Установка пакета
+   - deb: apt-get install <package>
+   - rpm: yum install <package>
+* initd, systemd
+  __[[https://linux-notes.org/pishem-systemd-unit-fajl/?ysclid=l3zhnz2h2c][статья про systemd]]__
+
+  #+ATTR_LATEX: :width .5\textwidth
+  [[file:init.png]]
+* BSD
+** FreeBSD/OpenBSD/NetBSD
+   #+ATTR_LATEX: :width .87\textwidth
+   [[file:freebsd-logo.png]]
+* Доп. информация по Linux
+  - __[[https://stepik.org/course/73/syllabus][Stepik: Введение в Linux]]__
+  - Брайан У. Керниган, Роб Пайк «Unix. Программное окружение»
+* Работа с «удалённым» сервером. SSH
+  #+BEGIN_SRC shell :exports code
+    ssh -p 22 resu@host
+  #+END_SRC
+  #+BEGIN_SRC shell :exports code
+    scp -P 22 resu@host:/path/to/file ~/
+  #+END_SRC
+  #+BEGIN_SRC shell :exports code
+    scp -P 2220 \
+        ~/file resu@host:/path/to/file
+  #+END_SRC
+* SSH Ключи
+  - Сгенерировать ключи /~\slash{}.ssh\slash{}id_rsa/ и /~\slash{}.ssh\slash{}id_rsa.pub/ для своего хоста (пользователя)
+    #+BEGIN_SRC shell :exports code
+      ssh-keygen
+    #+END_SRC
+  - Отправить свой публичный ключ на удалённый сервер (добавит в /~\slash{}.ssh\slash{}authorized_keys/)
+    #+BEGIN_SRC shell :exports code
+      ssh-copy-id user@host
+    #+END_SRC
+    *Никогда не публикуйте свой приватный ключ!* /~\slash{}.ssh\slash{}id_rsa/
+* Добавление алиасов для SSH-хостов
+  #+BEGIN_EXAMPLE
+  Host foo
+     Hostname 192.168.250.23
+     User root
+  Host bar
+     Hostname 192.168.250.34
+     User username
+     Port 2221
+  #+END_EXAMPLE
+  В файл /~\slash{}.ssh\slash{}config/ можно прописать алиасы для часто используемых хостов и сильно облегчить себе жизнь. Пароль прописать нельзя.
+  #+BEGIN_SRC shell :exports code
+    ssh bar
+  #+END_SRC
+* Python + SSH
+  __[[https://www.paramiko.org/][Paramiko]]__
+  #+BEGIN_SRC python :exports code
+    from paramiko.client import SSHClient
+    client = SSHClient()
+    client.load_system_host_keys()
+    client.connect(
+        "ssh.pvavilin.ru", username="root"
+    )
+    stdin, stdout, stderr = (
+        client.exec_command("ls -l")
+    )
+    print(stdout.read().decode('utf-8'))
+  #+END_SRC
+
+* Ansible
+  __[[https://docs.ansible.com/ansible/latest/index.html][Официальная страница]]__
+  #+BEGIN_EXAMPLE
+    ---
+    - name: My task
+      hosts: all
+      tasks:
+         - name: Leaving a mark
+           command: \
+           "touch /tmp/ansible_was_here"
+  #+END_EXAMPLE
+  Запускаем список задач:
+  #+BEGIN_SRC shell :exports code
+    ansible-playbook mytask.yaml
+  #+END_SRC
+
+* Salt
+  __[[https://docs.saltproject.io/en/getstarted/][Официальная страница]]__
+  В отличие от Ansible, все сервера-клиенты слушают мастер-сервер и ждут от него указаний. Это позволяет, например, ограничить на клиентах набор допустимых команд.
+* Rsync
+  Позволяет ускорить передачу данных с одного сервера на другой за счёт подсчёта контрольных сумм уже существующих данных. То есть, если на сервере есть данные за вчерашний день, то мы можем "докачать" блоки данных которые поменялись за сегодня.
+  #+BEGIN_SRC shell :exports code
+    rsync -av source destination
+  #+END_SRC
+  Можно использовать и на локальной машине.
+* screen / tmux
+  При работе с удалённым сервером часто нужно запустить несколько вкладок терминала. screen/tmux позволяют открыть несколько сессий командной строки в рамках одного подключения (можно и на локальной машине). Плюсом если у вас отвалится SSH-подключение, то при этом ваш сеанс работы с screen/tmux не будет потерян в отличие от работы в Bash напрямую. Благодаря последней возможности можно запускать фоновые сервисы без написания специальных скриптов.
+  - __[[https://www.gnu.org/software/screen/][screen]]__ :: старый и вездесущий.
+  - __[[https://www.ocf.berkeley.edu/~ckuehl/tmux/][Tmux]]__ :: более user-friendly.
+* Проверка состояния сервера
+  - uptime :: покажет сколько времени сервер живёт с момента последней перезагрузки. Покажет загрузку процессоров задачами (Load Average)
+  - w :: покажет запущенные сеансы пользователей
+  - top :: покажет статистику по процессам
+  - htop :: user-friendly /top/ (install)
+  - iotop :: покажет загрузку ввода/вывода (install)
+  - lsof :: показывает __[[https://habr.com/ru/company/ruvds/blog/337934/?ysclid=l3y0lg86um][информацию]]__ об открытых «файлах»
+  - df -h :: покажет состояние примонтированных файловых систем
+  - free -m :: покажет состояние оперативной памяти и файла подкачки
+  - date :: покажет текущее время на сервере
+* Другие оболочки комнадной строки
+  /Bash/ — это лишь одна из множества _оболочек командной строки_, но давно стал стандартом де-факто. Официальным стандартом является очень простая оболочка /sh/.\newline{}Кроме /Bash/ пользуется популярностью оболочка /zsh/ (в MacOS стандартная оболочка).\newline{} /Bash/ и /zsh/ совместимы с /sh/ — это значит что базовый синтаксис у них соответствует синтаксису /sh/.
+* PostgreSQL / MySQL / SQLite / NoSQL
+  - PostgreSQL и MySQL (MariaDB) обе профессиональные RDBMS. PostgreSQL может быть чуть сложнее в настройке из-за бóльшего набора возможностей.
+  - SQLite — подходит только для очень маленьких задач или для изучения стандарта SQL.
+  - NoSQL огромное множество. Выбор делается в соответствии с __[[https://ru.wikipedia.org/wiki/%25D0%25A2%25D0%25B5%25D0%25BE%25D1%2580%25D0%25B5%25D0%25BC%25D0%25B0_CAP][теоремой CAP]]__
+* Репликация
+  [[file:db_replication.jpg]]
+* Шардирование
+  [[file:db_sharding.png]]
+* Nginx
+  В интернете очень много статики!
+  #+ATTR_LATEX: :width .7\textwidth
+  [[file:cat.jpg]]
+* Nginx
+  [[file:nginx.jpeg]]
+* Cron
+  #+BEGIN_EXAMPLE
+       SHELL=/bin/sh
+       PATH=/usr/local/sbin:/usr/local/bin:/sbin:/bin
+
+       # Example of job definition:
+       # .---------------- minute (0-59)
+       # |  .------------- hour (0-23)
+       # |  |  .---------- day of month (1-31)
+       # |  |  |  .------- month (1-12) OR jan,feb,mar,apr
+       # |  |  |  |  .---- day of week (0-6) (Sunday=0 or 7)
+       # |  |  |  |  |       OR sun,mon,tue,wed,thu,fri,sat
+       # |  |  |  |  |
+       # m h dom mon dow user command
+       17 * * * *  root  <command>
+       25 6 * * *  root  <command>
+       47 6 * * 7  root  <command>
+       52 6 1 * *  root  <command>
+  #+END_EXAMPLE
+  #+BEGIN_SRC shell :exports code
+  man 5 crontab
+  #+END_SRC
+  #+BEGIN_SRC shell :exports code
+  crontab -e
+  #+END_SRC
+* Бэкапы
+  #+BEGIN_QUOTE
+  Админы делятся на тех, кто делает бэкап и на тех, кто еще не делает.
+  #+END_QUOTE
+  __[[https://www.bacula.org/][Bacula]]__
+  - Полный бэкап (например, раз в месяц)
+  - Инкрементальный бэкап (например, каждый день)
+* Logrotate
+  __[[https://www.redhat.com/sysadmin/setting-logrotate][Документация]]__
+  Подчищает старые лог-файлы.
+* Дополнительная литература
+  Если вам стал интересен какой-то из пунктов, то пишите запрос на доп. литературу в #XX_offtopic или #XX_library \Winkey[][green!60!white]
+* Безопасность
+  - __[[https://www.cyberciti.biz/faq/generating-random-password/][Генерируйте пароли]]__ при помощи /pwgen/ или /makepasswd/
+  - Проверяйте пароли на стойкость с помощью /cracklib-check/
+  - Никогда не работайте под *root*-ом, используйте /sudo/
+  - Не пишите файлы в /shared/ директории типа /\slash{}tmp/
+  - Лучше использовать нестандартный порт для SSH
+  - Процессы лучше заворачивать в docker
+  - Безопасность в Linux очень обширная тема. Специалисты по Linux-безопасности крайне востребованы.
+* Вопросы-ответы
+  #+ATTR_LATEX: :width .6\textwidth
+  [[file:questions.jpg]]
